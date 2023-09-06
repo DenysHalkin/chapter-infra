@@ -36,8 +36,8 @@ data "aws_iam_policy_document" "frontend_deploy_service" {
 
     ]
     resources = [
-      "arn:aws:s3:::test-781931727887/*",
-      "arn:aws:s3:::test-781931727887"
+      "arn:aws:s3:::chapter-dev-frontend-web-app-usw2",
+      "arn:aws:s3:::chapter-dev-frontend-web-app-usw2/*" #todo
     ]
   }
 }

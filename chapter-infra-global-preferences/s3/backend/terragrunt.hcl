@@ -22,12 +22,24 @@ inputs = {
     }
   }
 
+  lifecycle_rule = [
+    {
+      id      = "keep_only_2_versions_of_files"
+      enabled = true
+
+      filter = {
+        prefix = ""
+      }
+
+      noncurrent_version_expiration = {
+        newer_noncurrent_versions = 2
+        days                      = 1
+      }
+    }
+  ]
+
   versioning = {
     status     = true
     mfa_delete = false
-  }
-
-  tags = {
-    Application = "global-preferences"
   }
 }
