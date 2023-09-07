@@ -28,11 +28,13 @@ module "web_app_cloudfront" {
   }
 
   default_cache_behavior = {
-    target_origin_id       = "frontend_web_app_s3"
-    cache_policy_id        = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" #todo
-    viewer_protocol_policy = "redirect-to-https"
+    target_origin_id           = "frontend_web_app_s3"
+    cache_policy_id            = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" # Managed-CachingDisabled
+    origin_request_policy_id   = "b689b0a8-53d0-40ab-baf2-68738e2966ac" # Managed-AllViewerExceptHostHeader
+    response_headers_policy_id = "67f7725c-6f97-4210-82d7-5512b31e9d03" # Managed-SecurityHeadersPolicy
+    viewer_protocol_policy     = "https-only"
 
-    allowed_methods      = ["GET", "HEAD", "OPTIONS"]
+    allowed_methods      = ["GET", "HEAD", "OPTIONS", "DELETE", "PATCH", "POST", "PUT"]
     cached_methods       = ["GET", "HEAD"]
     compress             = true
     query_string         = true
