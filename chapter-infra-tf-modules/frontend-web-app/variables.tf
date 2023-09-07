@@ -1,8 +1,6 @@
-locals {
-  common_tags = {
-    Tier        = "web"
-    Environment = var.env_name
-  }
+variable "common_tags" {
+  description = "Common tags"
+  type        = map(string)
 }
 
 variable "project" {

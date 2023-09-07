@@ -43,7 +43,7 @@ module "web_app_s3" {
     mfa_delete = false
   }
 
-  tags = local.common_tags
+  tags = var.common_tags
 }
 
 data "aws_iam_policy_document" "web_app_s3_policy" {

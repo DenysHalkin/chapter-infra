@@ -60,5 +60,5 @@ module "logging_bucket" {
     mfa_delete = false
   }
 
-  tags = local.common_tags
+  tags = var.common_tags
 }

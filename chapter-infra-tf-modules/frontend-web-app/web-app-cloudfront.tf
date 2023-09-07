@@ -54,7 +54,7 @@ module "web_app_cloudfront" {
     ssl_support_method  = "sni-only"
   }
 
-  tags = local.common_tags
+  tags = var.common_tags
 }
 
 module "web_app_records" {
@@ -81,4 +81,6 @@ module "web_app_records" {
       }
     }
   ]
+
+  tags = var.common_tags
 }
