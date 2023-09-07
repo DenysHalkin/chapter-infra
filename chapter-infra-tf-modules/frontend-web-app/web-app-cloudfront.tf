@@ -1,8 +1,12 @@
+data "aws_route53_zone" "this" {
+  name = var.r53_domain_name
+}
+
 module "web_app_cloudfront" {
   source  = "terraform-aws-modules/cloudfront/aws"
   version = "3.2.1"
 
-  #aliases = ["chapter-web.com"]
+  aliases             = [var.web_app_domain_name]
   comment             = "Chapter Cloudfront ${title(var.env_name)} environement"
   default_root_object = "index.html"
   price_class         = "PriceClass_100"
@@ -45,5 +49,36 @@ module "web_app_cloudfront" {
     bucket = module.logging_bucket.s3_bucket_bucket_domain_name
   }
 
+  viewer_certificate = {
+    acm_certificate_arn = var.acm_certificate_arn
+    ssl_support_method  = "sni-only"
+  }
+
   tags = local.common_tags
+}
+
+module "web_app_records" {
+  source  = "terraform-aws-modules/route53/aws//modules/records"
+  version = "2.10.2"
+
+  zone_id = data.aws_route53_zone.this.zone_id
+
+  records = [
+    {
+      name = var.web_app_domain_name
+      type = "A"
+      alias = {
+        name    = module.web_app_cloudfront.cloudfront_distribution_domain_name
+        zone_id = module.web_app_cloudfront.cloudfront_distribution_hosted_zone_id
+      }
+    },
+    {
+      name = var.web_app_domain_name
+      type = "AAAA"
+      alias = {
+        name    = module.web_app_cloudfront.cloudfront_distribution_domain_name
+        zone_id = module.web_app_cloudfront.cloudfront_distribution_hosted_zone_id
+      }
+    }
+  ]
 }
