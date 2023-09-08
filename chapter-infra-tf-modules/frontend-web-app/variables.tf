@@ -23,8 +23,8 @@ variable "web_app_domain_name" {
   type        = string
 }
 
-variable "r53_domain_name" {
-  description = "Route 53 zone domain name"
+variable "web_app_subdomain" {
+  description = "Application subdomain name"
   type        = string
 }
 

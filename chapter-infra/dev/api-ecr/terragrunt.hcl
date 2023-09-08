@@ -15,7 +15,6 @@ locals {
     Tier        = "application"
     Environment = local.env_name
   }
-
 }
 
 inputs = {

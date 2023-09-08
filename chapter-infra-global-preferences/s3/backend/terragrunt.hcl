@@ -7,6 +7,12 @@ terraform {
   source  = "tfr://registry.terraform.io/terraform-aws-modules/s3-bucket/aws?version=3.15.1"
 }
 
+locals {
+  common_tags = {
+    Environment = "global"
+  }
+}
+
 inputs = {
   bucket = "chapter-terraform-state-usw2"
 
@@ -42,4 +48,6 @@ inputs = {
     status     = true
     mfa_delete = false
   }
+
+  tags = local.common_tags
 }
