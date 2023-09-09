@@ -3,7 +3,7 @@ terraform {
   backend "s3" {
     bucket  = "chapter-terraform-state-usw2"
     encrypt = true
-    key     = "chapter-infra-global-preferences/iam/terraform.tfstate"
+    key     = "shared/iam/terraform.tfstate"
     profile = "chapter"
     region  = "us-west-2"
   }

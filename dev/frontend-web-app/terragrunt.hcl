@@ -4,15 +4,15 @@ include "root" {
 }
 
 terraform {
-  source  = "../../../chapter-infra-tf-modules/frontend-web-app"
+  source  = "../../_tf-modules/frontend-web-app"
 }
 
 dependencies {
-  paths = ["../../../chapter-infra-global-preferences/acm"]
+  paths = ["../../shared/acm"]
 }
 
 dependency "acm" {
-  config_path = "${get_terragrunt_dir()}/../../../chapter-infra-global-preferences/acm"
+  config_path = "${get_terragrunt_dir()}/../../shared/acm"
 }
 
 locals {
