@@ -9,7 +9,7 @@ terraform {
 
 locals {
   common_tags = {
-    Environment = "global"
+    Environment = "shared"
   }
 }
 

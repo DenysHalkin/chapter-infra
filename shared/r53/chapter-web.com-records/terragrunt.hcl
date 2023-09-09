@@ -17,7 +17,7 @@ dependency "r53_zone" {
 
 locals {
   common_tags = {
-    Environment = "global"
+    Environment = "shared"
   }
 }
 
