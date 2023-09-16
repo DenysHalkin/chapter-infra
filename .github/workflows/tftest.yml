@@ -1,15 +1,14 @@
-name: tf-test
+name: tftest
 on:
   workflow_call:
-  pull_request:
-    branches: [ "main" ]
+
 env:
   tf_version: '1.5.6'
   tg_version: 'latest'
   tf_working_dir: '.'
 jobs:
-  terragrunt:
-    name: tf-test
+  tftest:
+    name: tftest
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout'
