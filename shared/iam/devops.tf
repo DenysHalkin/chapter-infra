@@ -22,7 +22,7 @@ data "aws_iam_policy_document" "devops" {
     sid    = "AllowAll"
     effect = "Allow"
 
-    actions   = [
+    actions = [
       "acm-pca:*",
       "execute-api:*",
       "support:*",
@@ -76,7 +76,7 @@ data "aws_iam_policy_document" "devops" {
       "waf-regional:*",
       "wam:*",
       "xray:*"
-   ]
+    ]
     resources = ["*"]
   }
 }
