@@ -1,0 +1,24 @@
+name: tflint
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  tflint:
+    runs-on: ubuntu-latest
+    name: tflint
+    
+    steps:
+    - uses: actions/checkout@v3
+      name: Checkout source code
+  
+    - uses: terraform-linters/setup-tflint@v3
+      name: Setup TFLint
+  
+    - name: Init TFLint
+      run: tflint --init
+  
+    - name: Run TFLint
+      run: tflint -f compact --recursive
