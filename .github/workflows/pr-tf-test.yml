@@ -1,0 +1,12 @@
+name: pr-tf-test
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  tflint:
+     uses: ./.github/workflows/tflint.yml
+  tfsec:
+     uses: ./.github/workflows/tfsec.yml
+  tftest:
+     uses: ./.github/workflows/tftest.yml
