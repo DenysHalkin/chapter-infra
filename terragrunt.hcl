@@ -1,3 +1,10 @@
+terraform {
+  before_hook "tflint" {
+    commands = ["apply", "plan"]
+    execute = ["tflint" , "--terragrunt-external-tflint", "--minimum-failure-severity=error"]
+  }
+}
+
 locals {
   project                = "chapter"
   aws_profile            = "chapter"
