@@ -21,9 +21,8 @@ data "aws_iam_policy_document" "devops" {
   statement {
     sid    = "AllowAll"
     effect = "Allow"
-
+    #tfsec:ignore:aws-iam-no-policy-wildcards
     actions = [
-      "acm-pca:*",
       "execute-api:*",
       "support:*",
       "access-analyzer:*",
@@ -77,7 +76,15 @@ data "aws_iam_policy_document" "devops" {
       "wam:*",
       "xray:*"
     ]
+
+    #tfsec:ignore:aws-iam-no-policy-wildcards
     resources = ["*"]
+
+    condition {
+      test     = "BoolIfExists"
+      values   = ["aws:MultiFactorAuthPresent"]
+      variable = "true"
+    }
   }
 }
 

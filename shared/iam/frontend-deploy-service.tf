@@ -1,5 +1,5 @@
-resource "aws_iam_group" "service_accounts" {
-  name = "chapter-service-accounts"
+resource "aws_iam_group" "frontend_deploy_service" {
+  name = "frontend-deploy-service"
 }
 
 resource "aws_iam_user" "frontend_deploy_service" {
@@ -13,7 +13,7 @@ resource "aws_iam_access_key" "frontend_deploy_service" {
 
 resource "aws_iam_group_membership" "service_accounts" {
   name  = "chapter-service-accounts-membership"
-  group = aws_iam_group.service_accounts.name
+  group = aws_iam_group.frontend_deploy_service.name
 
   users = [
     aws_iam_user.frontend_deploy_service.name
@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "frontend_deploy_service" {
 
     ]
     resources = [
-      "arn:aws:s3:::chapter-*-frontend-web-app-*",
+      "arn:aws:s3:::chapter-dev-frontend-web-app-usw2",
     ]
   }
 
@@ -47,11 +47,15 @@ data "aws_iam_policy_document" "frontend_deploy_service" {
     actions = [
       "kms:Encrypt",
       "kms:Decrypt",
-      "kms:ReEncrypt*",
-      "kms:GenerateDataKey*",
+      "kms:ReEncryptFrom",
+      "kms:ReEncryptTo",
+      "kms:GenerateDataKey",
+      "kms:GenerateDataKeyPair",
+      "kms:GenerateDataKeyPairWithoutPlaintext",
+      "kms:GenerateDataKeyWithoutPlaintext",
       "kms:DescribeKey"
     ]
-    resources = ["arn:aws:kms:*:*:key/77a3def6-1afa-4b0f-8e54-c2c95935c7cd"]
+    resources = ["arn:aws:kms:us-west-2:781931727887:key/77a3def6-1afa-4b0f-8e54-c2c95935c7cd"]
   }
 }
 
@@ -61,9 +65,9 @@ resource "aws_iam_policy" "frontend_deploy_service" {
   policy      = data.aws_iam_policy_document.frontend_deploy_service.json
 }
 
-resource "aws_iam_user_policy_attachment" "frontend_deploy_service" {
-  user       = aws_iam_user.frontend_deploy_service.name
+resource "aws_iam_group_policy_attachment" "frontend_deploy_service" {
   policy_arn = aws_iam_policy.frontend_deploy_service.arn
+  group      = aws_iam_group.frontend_deploy_service.name
 }
 
 
