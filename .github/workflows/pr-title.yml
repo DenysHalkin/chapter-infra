@@ -8,9 +8,12 @@ on:
       - synchronize
 
 jobs:
-  main:
+  validate-pr-title:
     name: validate-pr-title
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+      
     steps:
       # Please look up the latest version from
       # https://github.com/amannn/action-semantic-pull-request/releases
