@@ -46,7 +46,9 @@ module "web_app_cloudfront" {
   }
 
   logging_config = {
-    bucket = module.logging_bucket.s3_bucket_bucket_domain_name
+    bucket          = "${var.project}-${var.env_name}-cloudfront-logging-${var.region_alias}"
+    include_cookies = false
+    prefix          = "chapter-${var.env_name}-cloudfront-logs"
   }
 
   custom_error_response = [
