@@ -24,19 +24,23 @@ comments:
 #    - 'include' patterns will associate a label if any of these patterns match
 #    - 'exclude' patterns will ignore this label if any of these patterns match
 labels:
-  'bug':
+  'fix':
     include:
       - '\bbug[s]?\b'
+      - '\bfix[s]?\b'
     exclude: []
   'enhancement':
     include:
-      - '\benhancement\b'
+      - '\brefactor\b'
+      - '\bperf\b'
+      - '\bchore\b'
+      - '\bci\b'
     exclude: []
   'feature':
     include:
     - '\bfeat\b'
     exclude: []
-  'security':
+  'documentation':
     include:
-    - '\bsecurity\b'
+    - '\bdocs\b'
     exclude: []
