@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-      contents: read  
+      contents: read
+      statuses: read
       
     steps:
       # Please look up the latest version from
