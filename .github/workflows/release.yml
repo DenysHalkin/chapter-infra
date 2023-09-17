@@ -8,7 +8,6 @@ jobs:
     name: release
     runs-on: ubuntu-latest
    
-    if: ${{ github.ref_name == 'main' }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
