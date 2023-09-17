@@ -3,12 +3,11 @@ name: release
 on:
   workflow_dispatch:
   push:
-    # Sequence of patterns matched against refs/heads
     branches:    
       - dev
       - alpha
       - beta
-      - '+([0-9])?(.{+([0-9]),x}).x'
+      - main
 
 jobs:
   release:
