@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0-dev.1](https://github.com/DenysHalkin/chapter-infra/compare/v1.1.1-dev.1...v1.2.0-dev.1) (2023-09-17)
+
+
+### Features
+
+* test feat ([5265c63](https://github.com/DenysHalkin/chapter-infra/commit/5265c635899c3bdc27a74a4a244940c90e4ce8ae))
+* Test minor update ([9b0b73a](https://github.com/DenysHalkin/chapter-infra/commit/9b0b73a2df1201a4580f05e60815d9b240ac1a18))
+
 ### [1.1.1-dev.1](https://github.com/DenysHalkin/chapter-infra/compare/v1.1.0...v1.1.1-dev.1) (2023-09-17)
 
 
