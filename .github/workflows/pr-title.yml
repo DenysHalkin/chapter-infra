@@ -12,9 +12,19 @@ jobs:
     name: validate-pr-title
     runs-on: ubuntu-latest
     permissions:
+      actions: write
+      checks: write
+      contents: write
+      deployments: write
+      id-token: write
+      issues: write
+      discussions: write
+      packages: write
+      pages: write
       pull-requests: write
-      contents: read
-      statuses: read
+      repository-projects: write
+      security-events: write
+      statuses: write
       
     steps:
       # Please look up the latest version from
