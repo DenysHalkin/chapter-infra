@@ -36,9 +36,22 @@ data "aws_iam_policy_document" "frontend_deploy_service" {
 
     ]
     resources = [
-      "arn:aws:s3:::chapter-dev-frontend-web-app-usw2",
-      "arn:aws:s3:::chapter-dev-frontend-web-app-usw2/*" #todo
+      "arn:aws:s3:::chapter-*-frontend-web-app-*",
     ]
+  }
+
+  statement {
+    sid    = "AllowToGetKMS"
+    effect = "Allow"
+
+    actions = [
+      "kms:Encrypt",
+      "kms:Decrypt",
+      "kms:ReEncrypt*",
+      "kms:GenerateDataKey*",
+      "kms:DescribeKey"
+    ]
+    resources = ["arn:aws:kms:*:*:key/77a3def6-1afa-4b0f-8e54-c2c95935c7cd"]
   }
 }
 
