@@ -1,4 +1,4 @@
-name: tf-infra-test
+name: tf-infra-tests
 
 on:
   pull_request:
