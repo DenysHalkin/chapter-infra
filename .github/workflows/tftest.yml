@@ -1,4 +1,5 @@
 name: tftest
+
 on:
   workflow_call:
 
@@ -6,6 +7,7 @@ env:
   tf_version: '1.5.6'
   tg_version: 'latest'
   tf_working_dir: '.'
+
 jobs:
   tftest:
     name: tftest
