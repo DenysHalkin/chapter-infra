@@ -16,7 +16,7 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@v3
 
-      - name: Run tfsec
+      - name: Run tfsec sarif
         uses: aquasecurity/tfsec-sarif-action@v0.1.4
         if: ${{ github.ref_name == 'main' }}
         with:
@@ -34,3 +34,4 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         with:
           github_token: ${{ github.token }}
+          soft_fail_commenter: false
