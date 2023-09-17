@@ -12,8 +12,8 @@ jobs:
     name: validate-pr-title
     runs-on: ubuntu-latest
     permissions:
-      checks: write
-      statuses: write
+      checks: read
+      statuses: read
       
     steps:
       # Please look up the latest version from
