@@ -12,7 +12,7 @@ jobs:
     name: validate-pr-title
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: read
+      pull-requests: write-all
       
     steps:
       # Please look up the latest version from
