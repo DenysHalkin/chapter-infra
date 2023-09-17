@@ -12,7 +12,6 @@ jobs:
     name: validate-pr-title
     runs-on: ubuntu-latest
     permissions:
-      actions: write
       checks: write
       contents: write
       statuses: write
