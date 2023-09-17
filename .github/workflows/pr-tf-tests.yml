@@ -10,5 +10,9 @@ jobs:
      uses: ./.github/workflows/tflint.yml
   tfsec:
      uses: ./.github/workflows/tfsec.yml
+     permissions:
+       actions: read
+       contents: read
+       security-events: write
   tftest:
      uses: ./.github/workflows/tftest.yml
