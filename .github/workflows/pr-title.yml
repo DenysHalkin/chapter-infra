@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       checks: write
-      contents: write
       statuses: write
       
     steps:
