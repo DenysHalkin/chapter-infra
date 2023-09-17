@@ -15,9 +15,6 @@ jobs:
       actions: write
       checks: write
       contents: write
-      pull-requests: write
-      repository-projects: write
-      security-events: write
       statuses: write
       
     steps:
