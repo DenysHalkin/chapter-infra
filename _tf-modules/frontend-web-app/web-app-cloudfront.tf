@@ -46,7 +46,7 @@ module "web_app_cloudfront" {
   }
 
   logging_config = {
-    bucket          = "${var.project}-${var.env_name}-cloudfront-logging-${var.region_alias}"
+    bucket          = "${var.project}-${var.env_name}-cloudfront-logging-${var.region_alias}.s3.amazonaws.com"
     include_cookies = false
     prefix          = "chapter-${var.env_name}-cloudfront-logs"
   }
@@ -55,7 +55,7 @@ module "web_app_cloudfront" {
     {
       error_caching_min_ttl = 10
       error_code            = 403
-      response_code         = 404
+      response_code         = 200
       response_page_path    = "/index.html"
     }
   ]
