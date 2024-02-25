@@ -55,8 +55,9 @@ inputs = {
   }
 
   # Database subnets
-  database_subnets               =  local.database_subnets
-  database_dedicated_network_acl = false
+  database_subnets                       =  local.database_subnets
+  create_database_subnet_group           = false
+  database_dedicated_network_acl         = false
 
   database_subnet_tags = {
     Tier = "database"

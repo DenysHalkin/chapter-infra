@@ -1,15 +1,16 @@
-terraform {
-  before_hook "tflint" {
-    commands = ["apply", "plan"]
-    execute = ["tflint" , "--terragrunt-external-tflint", "--minimum-failure-severity=error"]
-  }
-}
+//terraform {
+//  before_hook "tflint" {
+//    commands = ["apply", "plan"]
+//    execute = ["tflint" , "--terragrunt-external-tflint", "--minimum-failure-severity=error"]
+//  }
+//}
 
 locals {
   project                = "chapter"
-  aws_profile            = "chapter"
-  terraform_state_bucket = "chapter-terraform-state-usw2"
-  aws_region             = "us-west-2"
+  aws_profile            = "chapter-web-2"
+  acc_id                 = "856033197975"
+  terraform_state_bucket = "chapter-terraform-state-euc1"
+  aws_region             = "eu-central-1"
   owner                  = "denis.galkin.91@gmail.com"
 
   region_alias = join("", [replace(regex("^.*-[a-z]{1}", local.aws_region), "-", ""), regex("[0-9]$", local.aws_region)])
@@ -61,7 +62,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "= 5.15.0"
+      version = ">= 4.9"
     }
   }
 }

@@ -7,13 +7,13 @@ terraform {
   source  = "../../_tf-modules/frontend-web-app"
 }
 
-dependencies {
-  paths = ["../../shared/acm"]
-}
-
-dependency "acm" {
-  config_path = "${get_terragrunt_dir()}/../../shared/acm"
-}
+//dependencies {
+//  paths = ["../../shared/acm"]
+//}
+//
+//dependency "acm" {
+//  config_path = "${get_terragrunt_dir()}/../../shared/acm"
+//}
 
 locals {
   env_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
@@ -32,7 +32,7 @@ inputs = {
 
   web_app_subdomain   = "dev"
   web_app_domain_name = "chapter-web.com"
-  acm_certificate_arn = dependency.acm.outputs.acm_certificate_arn
+  acm_certificate_arn = "" #dependency.acm.outputs.acm_certificate_arn
 
   common_tags = local.common_tags
 }

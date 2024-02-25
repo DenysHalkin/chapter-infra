@@ -54,68 +54,40 @@ inputs = {
 
       tags = { Name = "${include.root.locals.project}-${local.env_name}-s3-vpce" }
     },
-//    logs = {
-//      service             = "logs"
-//      private_dns_enabled = true
-//      #subnet_ids          = ["subnet-12345678", "subnet-87654321"]
-//
-//      tags = { Name = "${include.root.locals.project}-${local.env_name}-logs-vpce" }
-//    },
-//    lambda = {
-//      service          = "lambda"
-//      #subnet_ids
-//
-//      tags = { Name = "${include.root.locals.project}-${local.env_name}-lambda-vpce" }
-//    },
-//    ecr_api = {
-//      service             = "ecr.api"
-//      private_dns_enabled = true
-//      #subnet_ids          = module.vpc.private_subnets
-//
-//      tags = { Name = "${include.root.locals.project}-${local.env_name}-ecr-api-vpce" }
-//
-//    },
 //    ecr_dkr = {
 //      service             = "ecr.dkr"
 //      private_dns_enabled = true
-//      #subnet_ids          = module.vpc.private_subnets
+//      subnet_ids          =  dependency.vpc.outputs.private_subnets
 //
 //      tags = { Name = "${include.root.locals.project}-${local.env_name}-ecr-dkr-vpce" }
 //    },
-//    rds = {
-//      service             = "rds"
+//    logs = {
+//      service             = "logs"
 //      private_dns_enabled = true
-//      #subnet_ids          = module.vpc.private_subnets
+//      subnet_ids          = dependency.vpc.outputs.private_subnets
 //
-//      tags = { Name = "${include.root.locals.project}-${local.env_name}-rds-vpce" }
-//    }
-//    sns = {
-//      service             = "sns"
-//      private_dns_enabled = true
-//      #subnet_ids          = ["subnet-12345678", "subnet-87654321"]
-//
-//      tags = { Name = "${include.root.locals.project}-${local.env_name}-sns-vpce" }
+//      tags = { Name = "${include.root.locals.project}-${local.env_name}-logs-vpce" }
 //    },
-//    sqs = {
-//      service             = "sqs"
+//    ecs = {
+//      service             = "ecs"
 //      private_dns_enabled = true
-//      #subnet_ids          = ["subnet-12345678", "subnet-87654321"]
+//      subnet_ids          = dependency.vpc.outputs.private_subnets
 //
-//      tags = { Name = "${include.root.locals.project}-${local.env_name}-sqs-vpce" }
+//      tags = { Name = "${include.root.locals.project}-${local.env_name}-ecs-vpce" }
 //    },
-//    ec2 = {
-//      service             = "ec2"
+//    ecs-agent = {
+//      service             = "ecs-agent"
 //      private_dns_enabled = true
-//      #subnet_ids          = ["subnet-12345678", "subnet-87654321"]
+//      subnet_ids          = dependency.vpc.outputs.private_subnets
 //
-//      tags = { Name = "${include.root.locals.project}-${local.env_name}-ec2-vpce" }
-//    }
-//    execute-api = {
-//      service             = "execute-api"
+//      tags = { Name = "${include.root.locals.project}-${local.env_name}-ecs-agent-vpce" }
+//    },
+//    ecs-telemetry = {
+//      service             = "ecs-telemetry"
 //      private_dns_enabled = true
-//      #subnet_ids          = ["subnet-12345678", "subnet-87654321"]
+//      subnet_ids          = dependency.vpc.outputs.private_subnets
 //
-//      tags = { Name = "${include.root.locals.project}-${local.env_name}-execute-api-vpce" }
+//      tags = { Name = "${include.root.locals.project}-${local.env_name}-ecs-telemetry-vpce" }
 //    }
   }
 

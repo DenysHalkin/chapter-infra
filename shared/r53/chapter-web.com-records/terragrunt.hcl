@@ -29,17 +29,19 @@ inputs = {
       name = ""
       type = "SOA"
       ttl  = 900
-      records = ["ns-2033.awsdns-62.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
+      records = ["ns-1733.awsdns-24.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"]
+
     },
     {
       name = ""
       type = "NS"
       ttl  = 172800
       records = [
-        "ns-1423.awsdns-49.org.",
-        "ns-2033.awsdns-62.co.uk.",
-        "ns-243.awsdns-30.com.",
-        "ns-920.awsdns-51.net."
+        "ns-1357.awsdns-41.org.",
+        "ns-1733.awsdns-24.co.uk.",
+        "ns-206.awsdns-25.com.",
+        "ns-725.awsdns-26.net.",
+
       ]
     },
     {
@@ -50,3 +52,6 @@ inputs = {
     }
   ]
 }
+
+#terragrunt import 'aws_route53_record.this[" SOA"]' Z08570161J14CBNI3TX8K_chapter-web.com_SOA
+#terragrunt import 'aws_route53_record.this[" NS"]' Z08570161J14CBNI3TX8K_chapter-web.com_NS

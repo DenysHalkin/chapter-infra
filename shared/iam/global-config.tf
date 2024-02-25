@@ -1,5 +1,5 @@
 resource "aws_iam_account_alias" "account_alias" {
-  account_alias = "chapter-project"
+  account_alias = "chapter-web-2"
 }
 
 resource "aws_iam_account_password_policy" "password_policy" {
