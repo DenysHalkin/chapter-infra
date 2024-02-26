@@ -19,7 +19,7 @@ module "asg_sg" {
   ingress_with_source_security_group_id = [
     {
       rule                     = "all-all"
-      source_security_group_id = data.aws_security_group.default.id
+      source_security_group_id = module.alb.security_group_id
     }
   ]
 

@@ -13,7 +13,8 @@ module "ecs" {
   version = "5.9.1"
 
   #Cluster
-  cluster_name = local.cluster_name
+  cluster_name                = local.cluster_name
+  create_cloudwatch_log_group = false
 
   cluster_settings = [
     {
@@ -45,7 +46,7 @@ module "ecs" {
   }
 
   services = {
-    (local.container_name) = {
+    ("${local.container_name}-0") = {
 
       # Task execution IAM role
       create_task_exec_iam_role          = true
@@ -72,24 +73,35 @@ module "ecs" {
         }
       ]
 
-      //      subnet_ids = var.vpc.private_subnets
-      //
-      //      # Security group
-      //      create_security_group          = true
-      //      security_group_use_name_prefix = false
-      //      security_group_name            = "${var.project}-${var.env_name}-api-backend-ecs-service-${var.region_alias}"
-      //      security_group_description     = "SG for ${(local.container_name)} ECS service ${title(var.project)} ${var.env_name} environement"
-      //
-      //      security_group_rules = {
-      //        alb_http_ingress = {
-      //          type                     = "ingress"
-      //          from_port                = local.container_port
-      //          to_port                  = local.container_port
-      //          protocol                 = "tcp"
-      //          description              = "Service port"
-      //          source_security_group_id = module.asg_sg.security_group_id
-      //        }
-      //      }
+      subnet_ids = var.vpc.private_subnets
+
+      # Security group
+      create_security_group          = true
+      security_group_use_name_prefix = false
+      security_group_name            = "${var.project}-${var.env_name}-api-backend-ecs-service-${var.region_alias}"
+      security_group_description     = "SG for ${(local.container_name)} ECS service ${title(var.project)} ${var.env_name} environement"
+
+      security_group_tags = {
+        Name = "${var.project}-${var.env_name}-api-backend-ecs-service-${var.region_alias}"
+      }
+
+      security_group_rules = {
+        alb_http_ingress = {
+          type                     = "ingress"
+          from_port                = local.container_port
+          to_port                  = local.container_port
+          protocol                 = "tcp"
+          description              = "Service port"
+          source_security_group_id = module.alb.security_group_id
+        },
+        egress_all = {
+          type        = "egress"
+          from_port   = 0
+          to_port     = 0
+          protocol    = "-1"
+          cidr_blocks = ["0.0.0.0/0"]
+        }
+      }
 
       # Task Definition
       requires_compatibilities = ["EC2"]
@@ -105,11 +117,11 @@ module "ecs" {
 
       cpu          = var.ecs.container.cpu
       memory       = var.ecs.container.memory
-      network_mode = "host"
+      network_mode = "awsvpc"
 
       enable_autoscaling                 = false
       desired_count                      = var.ecs.container.desired_count
-      deployment_maximum_percent         = 200
+      deployment_maximum_percent         = 100
       deployment_minimum_healthy_percent = 0
 
       # Container definition(s)
@@ -129,11 +141,6 @@ module "ecs" {
 
           secrets = var.ecs.container.secrets
 
-          //          health_check = {
-          //            command = ["CMD-SHELL", "curl -f http://localhost:${local.container_port}/health || exit 1"]
-          //          }
-          //
-
           readonly_root_filesystem = false
 
           enable_cloudwatch_logging              = true
@@ -151,14 +158,15 @@ module "ecs" {
           }
         }
       }
-      //      load_balancer = {
-      //        service = {
-      //          target_group_arn = module.alb.target_groups["api"].arn
-      //          container_name   = local.container_name
-      //          container_port   = local.container_port
-      //        }
-      //      }
-      //
+
+      load_balancer = {
+        service = {
+          //noinspection HILUnresolvedReference
+          target_group_arn = module.alb.target_groups[local.container_name].arn
+          container_name   = local.container_name
+          container_port   = local.container_port
+        }
+      }
     }
   }
 

@@ -22,6 +22,8 @@ variable "vpc" {
   description = "VPC vars"
   type = object({
     vpc_id          = string
+    vpc_cidr_block  = string
+    public_subnets  = list(string)
     private_subnets = list(string)
   })
 }

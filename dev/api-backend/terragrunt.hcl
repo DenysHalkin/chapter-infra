@@ -37,6 +37,8 @@ inputs = {
 
   vpc = {
     vpc_id          = dependency.vpc.outputs.vpc_id
+    vpc_cidr_block  = dependency.vpc.outputs.vpc_cidr_block
+    public_subnets  = dependency.vpc.outputs.public_subnets
     private_subnets = dependency.vpc.outputs.private_subnets
   }
 
@@ -52,6 +54,7 @@ inputs = {
       enable_monitoring      = false
     }
   }
+
   ecs = {
     container = {
       image         = "856033197975.dkr.ecr.eu-central-1.amazonaws.com/chapter-dev-api:latest"
