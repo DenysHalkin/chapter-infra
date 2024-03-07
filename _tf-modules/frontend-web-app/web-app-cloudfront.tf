@@ -6,7 +6,7 @@ module "web_app_cloudfront" {
   source  = "terraform-aws-modules/cloudfront/aws"
   version = "3.2.1"
 
-  # aliases             = ["${var.web_app_subdomain}.${var.web_app_domain_name}"]
+  aliases             = ["${var.web_app_subdomain}.${var.web_app_domain_name}"]
   comment             = "Chapter Cloudfront ${title(var.env_name)} environement"
   default_root_object = "index.html"
   price_class         = "PriceClass_100"
@@ -60,11 +60,11 @@ module "web_app_cloudfront" {
     }
   ]
 
-  //  viewer_certificate = {
-  //    acm_certificate_arn      = var.acm_certificate_arn
-  //    ssl_support_method       = "sni-only"
-  //    minimum_protocol_version = "TLSv1.2_2021"
-  //  }
+    viewer_certificate = {
+      acm_certificate_arn      = var.acm_certificate_arn
+      ssl_support_method       = "sni-only"
+      minimum_protocol_version = "TLSv1.2_2021"
+    }
 
   tags = var.common_tags
 }
