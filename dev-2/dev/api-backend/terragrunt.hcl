@@ -4,7 +4,7 @@ include "root" {
 }
 
 terraform {
-  source  = "../../_tf-modules/api-backend"
+  source  = "../../../_tf-modules/api-backend"
 }
 
 dependencies {

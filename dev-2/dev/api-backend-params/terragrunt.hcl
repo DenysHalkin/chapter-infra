@@ -4,7 +4,7 @@ include "root" {
 }
 
 terraform {
-  source = "../../_tf-modules/ssm-params"
+  source = "../../../_tf-modules/ssm-params"
 }
 
 locals {
