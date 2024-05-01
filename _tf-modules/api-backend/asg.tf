@@ -91,7 +91,7 @@ module "asg" {
 
   network_interfaces = [{
     delete_on_termination       = true
-    associate_public_ip_address = true
+    associate_public_ip_address = true # TODO we dont have NAT(costs saving)
   }]
 
   metadata_options = {

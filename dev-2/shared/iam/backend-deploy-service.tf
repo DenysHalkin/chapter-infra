@@ -41,6 +41,17 @@ data "aws_iam_policy_document" "backend_deploy_service" {
     ]
     resources = ["*"]
   }
+
+  statement {
+    sid    = "AllowECS"
+    effect = "Allow"
+
+    actions = [
+      "ecs:UpdateService",
+      "ecs:DescribeServices"
+    ]
+    resources = ["*"]
+  }
 }
 
 

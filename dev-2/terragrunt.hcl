@@ -9,7 +9,7 @@ locals {
   project                = "chapter"
   aws_profile            = "chapter-web-2"
   acc_id                 = "856033197975"
-  terraform_state_bucket = "chapter-terraform-state-euc1"
+  terraform_state_bucket = "chapter-2-terraform-state-euc1"
   aws_region             = "eu-central-1"
   owner                  = "denis.galkin.91@gmail.com"
 
@@ -58,7 +58,7 @@ generate "versions" {
   if_exists = "overwrite"
   contents  = <<EOF
 terraform {
-  required_version = "= 1.5.6"
+  required_version = "= 1.8.1"
   required_providers {
     aws = {
       source  = "hashicorp/aws"

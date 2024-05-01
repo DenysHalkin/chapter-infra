@@ -38,7 +38,8 @@ inputs = {
     ]
   })
 
-  repository_force_delete = true
+  repository_image_tag_mutability = "MUTABLE"
+  repository_force_delete         = true
 
   tags = local.common_tags
 }

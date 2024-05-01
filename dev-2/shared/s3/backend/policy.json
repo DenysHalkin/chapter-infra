@@ -7,8 +7,8 @@
             "Principal": "*",
             "Action": "s3:*",
             "Resource": [
-                "arn:aws:s3:::chapter-terraform-state-euc1",
-                "arn:aws:s3:::chapter-terraform-state-euc1/*"
+                "arn:aws:s3:::chapter-2-terraform-state-euc1",
+                "arn:aws:s3:::chapter-2-terraform-state-euc1/*"
             ],
             "Condition": {
                 "Bool": {
@@ -24,8 +24,8 @@
             },
             "Action": "s3:*",
             "Resource": [
-                "arn:aws:s3:::chapter-terraform-state-euc1",
-                "arn:aws:s3:::chapter-terraform-state-euc1/*"
+                "arn:aws:s3:::chapter-2-terraform-state-euc1",
+                "arn:aws:s3:::chapter-2-terraform-state-euc1/*"
             ]
         }
     ]

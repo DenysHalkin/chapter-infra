@@ -6,7 +6,7 @@ module "web_app_cloudfront" {
   source  = "terraform-aws-modules/cloudfront/aws"
   version = "3.2.1"
 
-  aliases             = ["${var.web_app_subdomain}.${var.web_app_domain_name}"]
+  aliases             = ["${var.web_app_subdomain}.${var.web_app_domain_name}", var.web_app_domain_name]
   comment             = "Chapter Cloudfront ${title(var.env_name)} environement"
   default_root_object = "index.html"
   price_class         = "PriceClass_100"
@@ -38,7 +38,7 @@ module "web_app_cloudfront" {
     response_headers_policy_id = "67f7725c-6f97-4210-82d7-5512b31e9d03" # Managed-SecurityHeadersPolicy
     viewer_protocol_policy     = "https-only"
 
-    allowed_methods      = ["GET", "HEAD", "OPTIONS", "DELETE", "PATCH", "POST", "PUT"]
+    allowed_methods      = ["GET", "HEAD", "OPTIONS"]
     cached_methods       = ["GET", "HEAD"]
     compress             = true
     query_string         = true
@@ -60,11 +60,11 @@ module "web_app_cloudfront" {
     }
   ]
 
-    viewer_certificate = {
-      acm_certificate_arn      = var.acm_certificate_arn
-      ssl_support_method       = "sni-only"
-      minimum_protocol_version = "TLSv1.2_2021"
-    }
+  viewer_certificate = {
+    acm_certificate_arn      = var.acm_certificate_arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
+  }
 
   tags = var.common_tags
 }
@@ -85,7 +85,23 @@ module "web_app_records" {
       }
     },
     {
+      name = ""
+      type = "A"
+      alias = {
+        name    = module.web_app_cloudfront.cloudfront_distribution_domain_name
+        zone_id = module.web_app_cloudfront.cloudfront_distribution_hosted_zone_id
+      }
+    },
+    {
       name = var.web_app_subdomain
+      type = "AAAA"
+      alias = {
+        name    = module.web_app_cloudfront.cloudfront_distribution_domain_name
+        zone_id = module.web_app_cloudfront.cloudfront_distribution_hosted_zone_id
+      }
+    },
+    {
+      name = ""
       type = "AAAA"
       alias = {
         name    = module.web_app_cloudfront.cloudfront_distribution_domain_name

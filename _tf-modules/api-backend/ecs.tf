@@ -39,14 +39,14 @@ module "ecs" {
       }
 
       default_capacity_provider_strategy = {
-        weight = 100
-        base   = 2
+        weight = 1
+        base   = 0
       }
     }
   }
 
   services = {
-    ("${local.container_name}-0") = {
+    (local.container_name) = {
 
       # Task execution IAM role
       create_task_exec_iam_role          = true
@@ -57,8 +57,8 @@ module "ecs" {
 
       # Task execution IAM role policy
       create_task_exec_policy  = true
-      task_exec_secret_arns    = ["arn:aws:secretsmanager:*:*:secret:*"]
-      task_exec_ssm_param_arns = ["arn:aws:ssm:*:*:parameter/*"]
+      task_exec_secret_arns    = ["arn:aws:secretsmanager:*:*:secret:*"] #todo
+      task_exec_ssm_param_arns = ["arn:aws:ssm:*:*:parameter/*"]         #todo
       task_exec_iam_statements = {}
 
       # Task IAM role
@@ -72,6 +72,11 @@ module "ecs" {
           resources = ["arn:aws:s3:::*"]
         }
       ]
+
+      # Service IAM Role
+      # Role is not required if task definition uses `awsvpc` network mode or if a load balancer is not used
+      iam_role_name            = "${var.project}-${var.env_name}-${local.container_name}-ecs-service-${var.region_alias}"
+      iam_role_use_name_prefix = false
 
       subnet_ids = var.vpc.private_subnets
 
@@ -111,13 +116,13 @@ module "ecs" {
           //noinspection HILUnresolvedReference
           capacity_provider = module.ecs.autoscaling_capacity_providers["default_ec2"].name
           weight            = 1
-          base              = 2
+          base              = 0
         }
       }
 
       cpu          = var.ecs.container.cpu
       memory       = var.ecs.container.memory
-      network_mode = "awsvpc"
+      network_mode = "host" # todo"awsvpc"
 
       enable_autoscaling                 = false
       desired_count                      = var.ecs.container.desired_count
@@ -127,7 +132,8 @@ module "ecs" {
       # Container definition(s)
       container_definitions = {
         (local.container_name) = {
-          cpu       = 0
+          cpu       = var.ecs.container.cpu
+          memory    = var.ecs.container.memory
           essential = true
           image     = var.ecs.container.image
           port_mappings = [

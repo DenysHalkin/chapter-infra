@@ -8,7 +8,7 @@ terraform {
 }
 
 dependencies {
-  paths = ["../vpc", "../api-backend-params"]
+  paths = ["../vpc", "../api-backend-params", "../../shared/acm"]
 }
 
 dependency "vpc" {
@@ -16,7 +16,14 @@ dependency "vpc" {
 }
 
 dependency "api_backend_params" {
-  config_path = "${get_terragrunt_dir()}/../api-backend-params"
+  config_path  = "${get_terragrunt_dir()}/../api-backend-params"
+  mock_outputs = {
+    created_params = ["test-1", "test-2"]
+  }
+}
+
+dependency "acm" {
+  config_path = "${get_terragrunt_dir()}/../../shared/acm"
 }
 
 locals {
@@ -34,6 +41,8 @@ inputs = {
   env_name     = local.env_name
   region_alias = include.root.locals.region_alias
   common_tags  = local.common_tags
+
+  acm_certificate_arn = dependency.acm.outputs.acm_certificate_arn
 
   vpc = {
     vpc_id          = dependency.vpc.outputs.vpc_id

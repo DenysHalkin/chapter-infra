@@ -18,6 +18,17 @@ variable "region_alias" {
   type        = string
 }
 
+variable "acm_certificate_arn" {
+  description = "ACM certificate arm for HTTPS ALB listener"
+  type        = string
+}
+
+variable "route53_records" {
+  description = "Map of Route53 records to create. Each record map should contain `zone_id`, `name`, and `type`"
+  type        = any
+  default     = {}
+}
+
 variable "vpc" {
   description = "VPC vars"
   type = object({

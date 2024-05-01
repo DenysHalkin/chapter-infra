@@ -2,7 +2,7 @@ module "alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 9.0"
 
-  name = "${var.project}-${var.env_name}-pb-alb-${var.region_alias}"
+  name = "${var.project}-${var.env_name}-alb-${var.region_alias}"
 
   load_balancer_type = "application"
 
@@ -15,7 +15,7 @@ module "alb" {
   security_group_use_name_prefix = false
 
   security_group_tags = {
-    Name = "${var.project}-${var.env_name}-pb-alb-${var.region_alias}"
+    Name = "${var.project}-${var.env_name}-alb-${var.region_alias}"
   }
 
   security_group_ingress_rules = {
@@ -35,7 +35,7 @@ module "alb" {
   security_group_egress_rules = {
     all = {
       ip_protocol = "-1"
-      cidr_ipv4   = var.vpc.vpc_cidr_block
+      cidr_ipv4   = "0.0.0.0/0"
     }
   }
 
@@ -44,7 +44,7 @@ module "alb" {
       port            = 443
       protocol        = "HTTPS"
       ssl_policy      = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-      certificate_arn = "arn:aws:acm:eu-central-1:856033197975:certificate/2fb7be3c-2cb7-4e97-95ec-7bdc007e6624" #module.acm.acm_certificate_arn
+      certificate_arn = var.acm_certificate_arn
 
       forward = {
         target_group_key = local.container_name
@@ -67,7 +67,7 @@ module "alb" {
       name                              = "${var.project}-${var.env_name}-${local.container_name}-tg-${var.region_alias}"
       backend_protocol                  = "HTTP"
       port                              = local.container_port
-      target_type                       = "ip"
+      target_type                       = "instance" # todo "ip"
       deregistration_delay              = 5
       load_balancing_cross_zone_enabled = true
 
