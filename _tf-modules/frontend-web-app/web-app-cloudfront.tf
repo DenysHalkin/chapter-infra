@@ -6,7 +6,7 @@ module "web_app_cloudfront" {
   source  = "terraform-aws-modules/cloudfront/aws"
   version = "3.2.1"
 
-  aliases             = ["${var.web_app_subdomain}.${var.web_app_domain_name}"]
+  aliases             = ["${var.web_app_subdomain}.${var.web_app_domain_name}", var.web_app_domain_name]
   comment             = "Chapter Cloudfront ${title(var.env_name)} environement"
   default_root_object = "index.html"
   price_class         = "PriceClass_100"
@@ -33,12 +33,12 @@ module "web_app_cloudfront" {
 
   default_cache_behavior = {
     target_origin_id           = "frontend_web_app_s3"
-    cache_policy_id            = "4135ea2d-6df8-44a3-9df3-4b5a84be39ad" # Managed-CachingDisabled
+    cache_policy_id            = "658327ea-f89d-4fab-a63d-7e88639e58f6" # Managed-CachingOptimized
     origin_request_policy_id   = "b689b0a8-53d0-40ab-baf2-68738e2966ac" # Managed-AllViewerExceptHostHeader
     response_headers_policy_id = "67f7725c-6f97-4210-82d7-5512b31e9d03" # Managed-SecurityHeadersPolicy
     viewer_protocol_policy     = "https-only"
 
-    allowed_methods      = ["GET", "HEAD", "OPTIONS", "DELETE", "PATCH", "POST", "PUT"]
+    allowed_methods      = ["GET", "HEAD", "OPTIONS"]
     cached_methods       = ["GET", "HEAD"]
     compress             = true
     query_string         = true
@@ -46,7 +46,7 @@ module "web_app_cloudfront" {
   }
 
   logging_config = {
-    bucket          = "${var.project}-${var.env_name}-cloudfront-logging-${var.region_alias}"
+    bucket          = "${var.project}-${var.env_name}-cloudfront-logging-${var.region_alias}.s3.amazonaws.com"
     include_cookies = false
     prefix          = "chapter-${var.env_name}-cloudfront-logs"
   }
@@ -55,7 +55,7 @@ module "web_app_cloudfront" {
     {
       error_caching_min_ttl = 10
       error_code            = 403
-      response_code         = 404
+      response_code         = 200
       response_page_path    = "/index.html"
     }
   ]
@@ -85,7 +85,23 @@ module "web_app_records" {
       }
     },
     {
+      name = ""
+      type = "A"
+      alias = {
+        name    = module.web_app_cloudfront.cloudfront_distribution_domain_name
+        zone_id = module.web_app_cloudfront.cloudfront_distribution_hosted_zone_id
+      }
+    },
+    {
       name = var.web_app_subdomain
+      type = "AAAA"
+      alias = {
+        name    = module.web_app_cloudfront.cloudfront_distribution_domain_name
+        zone_id = module.web_app_cloudfront.cloudfront_distribution_hosted_zone_id
+      }
+    },
+    {
+      name = ""
       type = "AAAA"
       alias = {
         name    = module.web_app_cloudfront.cloudfront_distribution_domain_name
